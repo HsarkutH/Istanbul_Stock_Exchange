@@ -10,7 +10,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS stock_data
                 (ticker TEXT, date TEXT, open REAL, high REAL, low REAL, close REAL, volume INTEGER)''')
 
 # List of stock tickers for Istanbul Stock
-stock_tickers = ['ISTANBUL.STOCK1', 'ISTANBUL.STOCK2', 'ISTANBUL.STOCK3']
+stock_tickers = ['ACSEL.IS', 'ADEL.IS', 'ADESE.IS']
 
 # Iterate through each stock ticker
 for ticker in stock_tickers:

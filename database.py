@@ -20,13 +20,23 @@ for ticker, stock_name in stock_data.items():
     stock = yf.Ticker(ticker)
     data = stock.history(period='1d')
 
-    # Insert data into the table, checking for duplicates
+    # Insert/update data into the table for each row
     for index, row in data.iterrows():
         cursor.execute("SELECT * FROM stock_data WHERE ticker=? AND date=?", (ticker, index.strftime('%Y-%m-%d')))
         existing_data = cursor.fetchone()
-        if not existing_data:
+
+        if existing_data:
+            # Delete existing data for the current stock
+            cursor.execute("DELETE FROM stock_data WHERE ticker=?", (ticker,))
             cursor.execute("INSERT INTO stock_data VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                           (ticker, stock_name, index.strftime('%Y-%m-%d'), row['Open'], row['High'], row['Low'], row['Close'], row['Volume']))
+                           (ticker, stock_name, index.strftime('%Y-%m-%d'), row['Open'], row['High'], row['Low'],
+                            row['Close'], row['Volume']))
+
+        if not existing_data:
+            # Insert data if no existing data found
+            cursor.execute("INSERT INTO stock_data VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                           (ticker, stock_name, index.strftime('%Y-%m-%d'), row['Open'], row['High'], row['Low'],
+                            row['Close'],row['Volume']))
 
 # Commit the changes and close the connection
 conn.commit()

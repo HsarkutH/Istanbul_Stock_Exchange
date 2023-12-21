@@ -7,7 +7,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
     QLabel, QPushButton, QSizePolicy, QWidget)
-#import Icon_rc
+import iconlar
 
 class Ui_dialog(object):
     def setupUi(self, dialog):
@@ -22,7 +22,7 @@ class Ui_dialog(object):
         dialog.setMaximumSize(QSize(482, 390))
         dialog.setFocusPolicy(Qt.NoFocus)
         icon = QIcon()
-        icon.addFile(u":/icon/icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"D:\Istanbul_Stock_Exchange\iconlar\icon.png", QSize(), QIcon.Normal, QIcon.Off)
         dialog.setWindowIcon(icon)
         dialog.setStyleSheet(u"QWidget { background-color:rgb(0, 0, 17)\n"
 "}\n"
@@ -43,7 +43,7 @@ class Ui_dialog(object):
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(0, 0, 291, 281))
         self.label_2.setStyleSheet(u"")
-        self.label_2.setPixmap(QPixmap(u"../iconlar/FullLogo.png"))
+        self.label_2.setPixmap(QPixmap(u"D:\Istanbul_Stock_Exchange\iconlar\FullLogo.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setWordWrap(False)
         self.pushButton_3 = QPushButton(dialog)

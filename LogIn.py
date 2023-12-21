@@ -8,7 +8,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QWidget)
-#import Icon_r
+import iconlar
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -26,7 +26,7 @@ class Ui_Form(object):
         Form.setAcceptDrops(False)
         Form.setWindowTitle(u"Istanbul Exchange Software")
         icon = QIcon()
-        icon.addFile(u":/icon/icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"D:\Istanbul_Stock_Exchange\iconlar\icon.png", QSize(), QIcon.Normal, QIcon.Off)
         Form.setWindowIcon(icon)
         Form.setAutoFillBackground(False)
         Form.setStyleSheet(u"QWidget { background-color :#d1d5db;\n"

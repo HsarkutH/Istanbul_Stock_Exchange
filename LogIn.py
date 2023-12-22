@@ -9,8 +9,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QWidget)
 import iconlar
+import sqlite3
 
 class Ui_Form(object):
+
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -92,9 +94,25 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"Username:", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Password:", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Log In", None))
+        self.pushButton.clicked.connect(self.login)
+
         pass
     # retranslateUi
 
+    def login(self):
+        username = self.lineEdit.text()
+        password = self.lineEdit_2.text()
+
+        connection = sqlite3.connect("user.db")
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        data = cursor.fetchone()
+
+        if data is None:
+            print("Invalid username or password.")
+        else:
+            print("Login successful.")
 
 if __name__ == "__main__":
     app = QApplication([])

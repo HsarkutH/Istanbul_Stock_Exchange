@@ -8,6 +8,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
     QSizePolicy, QWidget)
 import iconlar
+import sqlite3
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -65,9 +66,31 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"Username:", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Set Password:", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"Confirm Password:", None))
+        self.pushButton.clicked.connect(self.signup)
+
     # retranslateUi
 
+    def signup(self):
+        username = self.lineEdit.text()
+        password = self.lineEdit_2.text()
+        confirm_password = self.lineEdit_3.text()
 
+        if password != confirm_password:
+            print("Passwords do not match.")
+            return
+
+        connection = sqlite3.connect("user.db")
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+        data = cursor.fetchone()
+
+        if data is not None:
+            print("Username already exists.")
+        else:
+            cursor.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+            connection.commit()
+            print("User created successfully.")
 
 if __name__ == "__main__":
         app = QApplication([])

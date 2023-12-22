@@ -68,6 +68,7 @@ class Ui_Form(object):
     # retranslateUi
 
 
+
 if __name__ == "__main__":
         app = QApplication([])
 

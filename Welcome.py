@@ -13,13 +13,12 @@ class Ui_dialog(object):
     def setupUi(self, dialog):
         if not dialog.objectName():
             dialog.setObjectName(u"dialog")
-        dialog.resize(288, 280)
+        dialog.setFixedSize(288, 280)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(dialog.sizePolicy().hasHeightForWidth())
         dialog.setSizePolicy(sizePolicy)
-        dialog.setMaximumSize(QSize(482, 390))
         dialog.setFocusPolicy(Qt.NoFocus)
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)

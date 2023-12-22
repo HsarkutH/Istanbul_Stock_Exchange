@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.11" jdkType="Python SDK" />
 =======
@@ -14,6 +15,9 @@
 =======
     <orderEntry type="jdk" jdkName="Python 3.12" jdkType="Python SDK" />
 >>>>>>> 9990bd3a3103924371704a083079141da356da81
+=======
+    <orderEntry type="jdk" jdkName="Python 3.12 (Istanbul_Stock_Exchange)" jdkType="Python SDK" />
+>>>>>>> Stashed changes
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

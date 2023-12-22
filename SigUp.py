@@ -16,7 +16,7 @@ class Ui_Form(object):
         Form.resize(277, 277)
         Form.setMaximumSize(QSize(482, 390))
         icon = QIcon()
-        icon.addFile(u"D:\Istanbul_Stock_Exchange\iconlar\icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         Form.setWindowIcon(icon)
         Form.setStyleSheet(u"QWidget { background-color :#d1d5db;\n"
 "}\n"

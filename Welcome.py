@@ -5,20 +5,31 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
-    QSizePolicy, QWidget)
-
+from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
+    QLabel, QPushButton, QSizePolicy, QWidget, QMainWindow)
 import iconlar
+import subprocess
+import os
 
-class Ui_WelcomePage(object):
-    def setupUi(self, WelcomePage):
-        if not WelcomePage.objectName():
-            WelcomePage.setObjectName(u"WelcomePage")
-        WelcomePage.resize(308, 300)
+import subprocess
+
+import LogIn
+import SigUp
+class Ui_dialog(object):
+    def setupUi(self, dialog):
+        if not dialog.objectName():
+            dialog.setObjectName(u"dialog")
+        dialog.setFixedSize(288, 280)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(dialog.sizePolicy().hasHeightForWidth())
+        dialog.setSizePolicy(sizePolicy)
+        dialog.setFocusPolicy(Qt.NoFocus)
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
-        WelcomePage.setWindowIcon(icon)
-        WelcomePage.setStyleSheet(u"QWidget { background-color:rgb(0, 0, 17)\n"
+        dialog.setWindowIcon(icon)
+        dialog.setStyleSheet(u"QWidget { background-color:rgb(0, 0, 17)\n"
 "}\n"
 "QPushButton { background-color: rgb(107, 114, 128);\n"
 "color: rgb(255, 255, 255)\n"
@@ -26,47 +37,74 @@ class Ui_WelcomePage(object):
 "QLineEdit {background-color: #9ca3af\n"
 "}\n"
 "")
-        WelcomePage.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
-        self.IESicoNlabel = QLabel(WelcomePage)
-        self.IESicoNlabel.setObjectName(u"IESicoNlabel")
-        self.IESicoNlabel.setGeometry(QRect(0, 0, 311, 301))
-        self.IESicoNlabel.setMaximumSize(QSize(482, 390))
-        self.IESicoNlabel.setAutoFillBackground(False)
-        self.IESicoNlabel.setStyleSheet(u"")
-        self.IESicoNlabel.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
-        self.IESicoNlabel.setFrameShadow(QFrame.Plain)
-        self.IESicoNlabel.setPixmap(QPixmap(u"iconlar/FullLogo.png"))
-        self.IESicoNlabel.setScaledContents(True)
-        self.IESicoNlabel.setWordWrap(False)
-        self.LogInbutton = QPushButton(WelcomePage)
-        self.LogInbutton.setObjectName(u"LogInbutton")
-        self.LogInbutton.setGeometry(QRect(10, 260, 91, 25))
-        self.LogInbutton.setAutoDefault(True)
-        self.LogInbutton.setFlat(False)
-        self.SignUpbutton = QPushButton(WelcomePage)
-        self.SignUpbutton.setObjectName(u"SignUpbutton")
-        self.SignUpbutton.setGeometry(QRect(210, 260, 91, 25))
+        dialog.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
+        dialog.setModal(False)
+        self.buttonBox = QDialogButtonBox(dialog)
+        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setGeometry(QRect(10, 600, 461, 32))
+        self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.label_2 = QLabel(dialog)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(0, 0, 291, 281))
+        self.label_2.setStyleSheet(u"")
+        self.label_2.setPixmap(QPixmap(u"iconlar/FullLogo.png"))
+        self.label_2.setScaledContents(True)
+        self.label_2.setWordWrap(False)
+        self.pushButton_3 = QPushButton(dialog)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(190, 250, 91, 25))
+        self.pushButton_2 = QPushButton(dialog)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setGeometry(QRect(10, 250, 91, 25))
+        self.pushButton_2.setAutoDefault(True)
+        self.pushButton_2.setFlat(False)
 
-        self.retranslateUi(WelcomePage)
+        self.retranslateUi(dialog)
+        self.buttonBox.accepted.connect(dialog.accept)
+        self.buttonBox.rejected.connect(dialog.reject)
 
-        self.LogInbutton.setDefault(False)
+        self.pushButton_2.setDefault(False)
+        self.pushButton_2.clicked.connect(self.open_login_menu)
+        self.pushButton_3.clicked.connect(self.open_signup_menu)
 
 
-        QMetaObject.connectSlotsByName(WelcomePage)
+        QMetaObject.connectSlotsByName(dialog)
     # setupUi
+    def open_login_menu(self):
+        self.login_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_login_menu = LogIn.Ui_Form()
+        ui_login_menu.setupUi(self.login_menum)
+        # Ana pencereyi gösterin
+        self.login_menum.show()
 
-    def retranslateUi(self, WelcomePage):
-        WelcomePage.setWindowTitle(QCoreApplication.translate("WelcomePage", u"Istanbul Exchange Software", None))
-        self.IESicoNlabel.setText("")
-        self.LogInbutton.setText(QCoreApplication.translate("WelcomePage", u"Log In", None))
-        self.SignUpbutton.setText(QCoreApplication.translate("WelcomePage", u"Sign up", None))
+    def open_signup_menu(self):
+        self.signup_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_signup_menu = SigUp.Ui_Form()
+        ui_signup_menu.setupUi(self.signup_menum)
+        # Ana pencereyi gösterin
+        self.signup_menum.show()
+    def retranslateUi(self, dialog):
+        dialog.setWindowTitle(QCoreApplication.translate("dialog", u"Istanbul Exchange Software", None))
+#if QT_CONFIG(tooltip)
+        dialog.setToolTip(QCoreApplication.translate("dialog", u"<html><head/><body><p><br/></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        dialog.setWhatsThis(QCoreApplication.translate("dialog", u"<html><head/><body><p><br/></p></body></html>", None))
+#endif // QT_CONFIG(whatsthis)
+        self.label_2.setText("")
+        self.pushButton_3.setText(QCoreApplication.translate("dialog", u"Sign up", None))
+        self.pushButton_2.setText(QCoreApplication.translate("dialog", u"Log In", None))
     # retranslateUi
+
 
 if __name__ == "__main__":
     app = QApplication([])
 
-    dialog = QWidget()
-    ui = Ui_WelcomePage()
+    dialog = QDialog()
+    ui = Ui_dialog()
     ui.setupUi(dialog)
 
     dialog.show()

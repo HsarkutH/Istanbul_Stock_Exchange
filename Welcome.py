@@ -15,7 +15,7 @@ class Ui_WelcomePage(object):
             WelcomePage.setObjectName(u"WelcomePage")
         WelcomePage.resize(308, 300)
         icon = QIcon()
-        icon.addFile(u":/icon/icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         WelcomePage.setWindowIcon(icon)
         WelcomePage.setStyleSheet(u"QWidget { background-color:rgb(0, 0, 17)\n"
 "}\n"

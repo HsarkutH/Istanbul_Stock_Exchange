@@ -6,54 +6,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QLabel, QPushButton, QSizePolicy, QWidget)
+    QLabel, QPushButton, QSizePolicy, QWidget, QMainWindow)
 import iconlar
 import subprocess
 import os
 
-
-import os
 import subprocess
-def open_file1():
-    try:
-        # Get the current working directory
-        current_dir = os.getcwd()
 
-        # Construct the path to LogIn.py relative to the current directory
-        file1_path = os.path.join(current_dir, 'LogIn.py')
-
-        if os.path.exists(file1_path):  # Check if the file exists
-            # Execute the first Python file
-            subprocess.Popen(['python3.12', file1_path])
-        else:
-            print("Error: File 1 not found.")
-    except Exception as e:
-        print(f"Error: {e}")
-
-# Call the function
-open_file1()
-
-
-def open_file2():
-    try:
-        # Get the current working directory
-        current_dir = os.getcwd()
-
-        # Construct the path to LogIn.py relative to the current directory
-        file2_path = os.path.join(current_dir, 'SigUp.py')
-
-        if os.path.exists(file2_path):  # Check if the file exists
-            # Execute the first Python file
-            subprocess.Popen(['python3.12', file2_path])
-        else:
-            print("Error: File 1 not found.")
-    except Exception as e:
-        print(f"Error: {e}")
-
-    # Call the function
-
-
-open_file2()
+import LogIn
+import SigUp
 class Ui_dialog(object):
     def setupUi(self, dialog):
         if not dialog.objectName():
@@ -104,13 +65,27 @@ class Ui_dialog(object):
         self.buttonBox.rejected.connect(dialog.reject)
 
         self.pushButton_2.setDefault(False)
-        self.pushButton_2.clicked.connect(open_file1())
-        self.pushButton_3.clicked.connect(open_file2())
+        self.pushButton_2.clicked.connect(self.open_login_menu)
+        self.pushButton_3.clicked.connect(self.open_signup_menu)
 
 
         QMetaObject.connectSlotsByName(dialog)
     # setupUi
+    def open_login_menu(self):
+        self.login_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_login_menu = LogIn.Ui_Form()
+        ui_login_menu.setupUi(self.login_menum)
+        # Ana pencereyi gösterin
+        self.login_menum.show()
 
+    def open_signup_menu(self):
+        self.signup_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_signup_menu = SigUp.Ui_Form()
+        ui_signup_menu.setupUi(self.signup_menum)
+        # Ana pencereyi gösterin
+        self.signup_menum.show()
     def retranslateUi(self, dialog):
         dialog.setWindowTitle(QCoreApplication.translate("dialog", u"Istanbul Exchange Software", None))
 #if QT_CONFIG(tooltip)

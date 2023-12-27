@@ -59,7 +59,6 @@ class Ui_Form(object):
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
-
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Istanbul Exchange Software", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Sign Up", None))
@@ -84,13 +83,16 @@ class Ui_Form(object):
 
         cursor.execute("SELECT * FROM users WHERE username=?", (username,))
         data = cursor.fetchone()
-
-        if data is not None:
-            print("Username already exists.")
+        if not username or not password or not confirm_password:
+            print("Lütfen tüm alanları doldurun.")
+            return
         else:
-            cursor.execute("INSERT INTO users VALUES (?, ?)", (username, password))
-            connection.commit()
-            print("User created successfully.")
+            if data is not None:
+                print("Username already exists.")
+            else:
+                cursor.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+                connection.commit()
+                print("User created successfully.")
 
 if __name__ == "__main__":
         app = QApplication([])

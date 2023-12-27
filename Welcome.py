@@ -6,8 +6,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
-    QSizePolicy, QWidget)
+    QSizePolicy, QWidget, QMainWindow)
 import iconlar
+import Helper
+import LogIn
+import SigUp
 
 class Ui_WelcomePage(object):
     def setupUi(self, WelcomePage):
@@ -50,9 +53,32 @@ class Ui_WelcomePage(object):
 
         self.LogInbutton.setDefault(False)
 
+        self.LogInbutton.clicked.connect(self.open_login_menu)
+        self.SignUpbutton.clicked.connect(self.open_signup_menu)
 
         QMetaObject.connectSlotsByName(WelcomePage)
     # setupUi
+
+    def open_login_menu(self):
+        self.login_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_login_menu = LogIn.Ui_Form()
+        ui_login_menu.setupUi(self.login_menum)
+        # Ana pencereyi gösterin
+        self.login_menum.show()
+
+    def open_signup_menu(self):
+        self.signup_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_signup_menu = SigUp.Ui_Form()
+        ui_signup_menu.setupUi(self.signup_menum)
+        #ui_signup_menu.retranslateUi(self.signup_menum)
+        def connect_signup():
+            ui_signup_menu.signup()
+        # Ana pencereyi gösterin
+        ui_signup_menu.pushButton.clicked.connect(connect_signup)
+        self.signup_menum.show()
+        print("Button connection established!")
 
     def retranslateUi(self, WelcomePage):
         WelcomePage.setWindowTitle(QCoreApplication.translate("WelcomePage", u"Istanbul Exchange Software", None))

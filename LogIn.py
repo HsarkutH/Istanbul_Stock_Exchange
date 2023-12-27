@@ -7,17 +7,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QWidget)
+    QSizePolicy, QWidget, QMessageBox, QMainWindow)
 import iconlar
 import sqlite3
+import MainMenu
 
 class Ui_Form(object):
 
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(277, 277)
-        Form.setMaximumSize(QSize(482, 390))
+        Form.setFixedSize(277, 277)
+        #Form.setMaximumSize(QSize(482, 390))
         font = QFont()
         font.setFamilies([u"Segoe UI"])
         font.setBold(False)
@@ -94,7 +95,7 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"Username:", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Password:", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Log In", None))
-        self.pushButton.clicked.connect(self.login)
+        #self.pushButton.clicked.connect(self.login)
 
         pass
     # retranslateUi
@@ -109,10 +110,39 @@ class Ui_Form(object):
         cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
         data = cursor.fetchone()
 
-        if data is None:
-            print("Invalid username or password.")
+        if not username or not password:
+            msg_box = QMessageBox()
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setText('Please fill in all fields!')
+            msg_box.setWindowTitle('Warning')
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec()
+            return
         else:
-            print("Login successful.")
+            if data is None:
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setText('Invalid username or password.')
+                msg_box.setWindowTitle('Warning')
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.exec()
+            else:
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setText('Login successful.')
+                msg_box.setWindowTitle('Succesful')
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.exec()
+                self.open_main_menu()
+    def open_main_menu(self):
+        self.main_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_main_menu = MainMenu.Ui_mainWindow()
+        ui_main_menu.setupUi(self.main_menum)
+        ui_main_menu.retranslateUi(self.main_menum)
+        # Ana pencereyi gösterin
+        self.main_menum.show()
+
 
 if __name__ == "__main__":
     app = QApplication([])

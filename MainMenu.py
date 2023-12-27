@@ -18,7 +18,7 @@ class Ui_mainWindow(object):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
         mainWindow.setEnabled(True)
-        mainWindow.resize(976, 655)
+        mainWindow.setFixedSize(976, 655)
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         mainWindow.setWindowIcon(icon)

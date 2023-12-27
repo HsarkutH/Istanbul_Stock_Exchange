@@ -6,7 +6,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QWidget)
+    QSizePolicy, QWidget, QMessageBox)
 import iconlar
 import sqlite3
 
@@ -14,8 +14,8 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(277, 277)
-        Form.setMaximumSize(QSize(482, 390))
+        Form.setFixedSize(277, 277)
+        #Form.setMaximumSize(QSize(482, 390))
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         Form.setWindowIcon(icon)
@@ -65,7 +65,7 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"Username:", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"Set Password:", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"Confirm Password:", None))
-        self.pushButton.clicked.connect(self.signup)
+        #self.pushButton.clicked.connect(self.signup)
 
     # retranslateUi
 
@@ -84,15 +84,31 @@ class Ui_Form(object):
         cursor.execute("SELECT * FROM users WHERE username=?", (username,))
         data = cursor.fetchone()
         if not username or not password or not confirm_password:
-            print("Lütfen tüm alanları doldurun.")
+            msg_box = QMessageBox()
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setText('Please fill in all fields!')
+            msg_box.setWindowTitle('Warning')
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec()
+
             return
         else:
             if data is not None:
-                print("Username already exists.")
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setText('User Already Exists!')
+                msg_box.setWindowTitle('Warning')
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.exec()
             else:
                 cursor.execute("INSERT INTO users VALUES (?, ?)", (username, password))
                 connection.commit()
-                print("User created successfully.")
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setText('User Created Succesfully!')
+                msg_box.setWindowTitle('Succesful')
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.exec()
 
 if __name__ == "__main__":
         app = QApplication([])

@@ -16,7 +16,7 @@ class Ui_WelcomePage(object):
     def setupUi(self, WelcomePage):
         if not WelcomePage.objectName():
             WelcomePage.setObjectName(u"WelcomePage")
-        WelcomePage.resize(308, 300)
+        WelcomePage.setFixedSize(308, 300)
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         WelcomePage.setWindowIcon(icon)
@@ -65,6 +65,9 @@ class Ui_WelcomePage(object):
         ui_login_menu = LogIn.Ui_Form()
         ui_login_menu.setupUi(self.login_menum)
         # Ana pencereyi gösterin
+        def connect_login():
+            ui_login_menu.login()
+        ui_login_menu.pushButton.clicked.connect(connect_login)
         self.login_menum.show()
 
     def open_signup_menu(self):
@@ -72,13 +75,13 @@ class Ui_WelcomePage(object):
         # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
         ui_signup_menu = SigUp.Ui_Form()
         ui_signup_menu.setupUi(self.signup_menum)
-        #ui_signup_menu.retranslateUi(self.signup_menum)
+        ui_signup_menu.retranslateUi(self.signup_menum)
         def connect_signup():
             ui_signup_menu.signup()
+            #app.exit()
         # Ana pencereyi gösterin
         ui_signup_menu.pushButton.clicked.connect(connect_signup)
         self.signup_menum.show()
-        print("Button connection established!")
 
     def retranslateUi(self, WelcomePage):
         WelcomePage.setWindowTitle(QCoreApplication.translate("WelcomePage", u"Istanbul Exchange Software", None))

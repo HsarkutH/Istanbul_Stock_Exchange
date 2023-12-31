@@ -127,12 +127,6 @@ class Ui_Form(object):
                 msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box.exec()
             else:
-                msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Information)
-                msg_box.setText('Login successful.')
-                msg_box.setWindowTitle('Succesful')
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.exec()
                 self.open_main_menu()
     def open_main_menu(self):
         self.main_menum = QMainWindow()

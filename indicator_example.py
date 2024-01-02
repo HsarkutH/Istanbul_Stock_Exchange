@@ -19,7 +19,7 @@ class StockChartApp(QMainWindow):
         # Combobox for selecting indicator
         self.indicator_combobox = QComboBox()
         self.indicator_combobox.addItem("None")
-        self.indicator_combobox.addItems(["SMA", "RSI", "MACD"])  # Add more indicators as needed
+        self.indicator_combobox.addItems(["SMA", "RSI"])  # Add more indicators as needed
         self.layout.addWidget(self.indicator_combobox)
 
         # PyQtGraph PlotWidget for displaying the stock chart
@@ -38,7 +38,9 @@ class StockChartApp(QMainWindow):
 
     def plot_stock_chart(self):
         self.plot_widget.clear()
-        self.plot_widget.plot(self.data.index, self.data["Close"], pen='b', name='Stock Price')
+
+        # Plot stock closing prices as a line
+        self.plot_widget.plot(self.data.index, self.data["Close"], name="Close", pen=pg.mkPen(color="b"))
 
     def plot_indicator(self, indicator_values, name):
         self.plot_widget.plot(self.data.index, indicator_values, name=name)

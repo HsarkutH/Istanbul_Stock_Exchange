@@ -1,56 +1,70 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import matplotlib.pyplot as plt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QComboBox
+import pyqtgraph as pg
 import yfinance as yf
+import pandas_ta as ta
 
-class FinanceApp(QMainWindow):
+class StockChartApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle('Finance App')
+        self.setWindowTitle("Stock Chart with Indicator")
         self.setGeometry(100, 100, 800, 600)
 
-        self.central_widget = QWidget(self)
+        self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
         self.layout = QVBoxLayout(self.central_widget)
 
-        self.canvas = PlotCanvas(self, width=5, height=4)
-        self.layout.addWidget(self.canvas)
+        # Combobox for selecting indicator
+        self.indicator_combobox = QComboBox()
+        self.indicator_combobox.addItem("None")
+        self.indicator_combobox.addItems(["SMA", "RSI", "MACD"])  # Add more indicators as needed
+        self.layout.addWidget(self.indicator_combobox)
 
-        self.load_data_button = QPushButton('Load Data', self)
-        self.layout.addWidget(self.load_data_button)
-        self.load_data_button.clicked.connect(self.load_data)
+        # PyQtGraph PlotWidget for displaying the stock chart
+        self.plot_widget = pg.PlotWidget()
+        self.layout.addWidget(self.plot_widget)
 
-    def load_data(self):
-        symbol = "THYAO.IS"
-        start_date = "2022-01-01"
-        end_date = "2023-01-01"
-        data = yf.download(symbol, start=start_date, end=end_date)
+        # Connect the combobox signal to the slot for indicator selection
+        self.indicator_combobox.currentIndexChanged.connect(self.update_chart)
 
-        self.canvas.plot_data(data)
+        # Initial symbol and data
+        self.symbol = "AAPL"
+        self.data = yf.download(self.symbol, start="2022-01-01", end="2023-01-01")
 
-class PlotCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig, self.ax = plt.subplots(figsize=(width, height), dpi=dpi)
-        super().__init__(fig)
-        self.setParent(parent)
+        # Initial plot
+        self.plot_stock_chart()
 
-    def plot_data(self, data):
-        self.ax.clear()
+    def plot_stock_chart(self):
+        self.plot_widget.clear()
+        self.plot_widget.plot(self.data.index, self.data["Close"], pen='b', name='Stock Price')
 
-        # Buraya finansal göstergelerinizi çizme kodlarını ekleyin
-        self.ax.plot(data['Close'], label='Close Price', alpha=0.5)
-        # Örnek olarak SMA eklendi
-        self.ax.plot(data['Close'].rolling(window=50).mean(), label='SMA 50', linestyle='--', alpha=0.7)
+    def plot_indicator(self, indicator_values, name):
+        self.plot_widget.plot(self.data.index, indicator_values, name=name)
 
-        self.ax.set_title('Finance Indicators')
-        self.ax.legend()
-        self.draw()
+    def update_chart(self):
+        selected_indicator = self.indicator_combobox.currentText()
 
-if __name__ == '__main__':
+        # Clear previous indicator plot
+        self.plot_widget.clearPlots()
+
+        # Plot stock price
+        self.plot_stock_chart()
+
+        # Plot selected indicator
+        if selected_indicator == "SMA":
+            sma_values = self.data.ta.sma(length=20)
+            self.plot_indicator(sma_values, "SMA")
+        elif selected_indicator == "RSI":
+            rsi_values = self.data.ta.rsi(length=14)
+            self.plot_indicator(rsi_values, "RSI")
+
+def main():
     app = QApplication(sys.argv)
-    window = FinanceApp()
+    window = StockChartApp()
     window.show()
     sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()

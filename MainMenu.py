@@ -1,4 +1,3 @@
-
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -7,10 +6,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QGraphicsView, QHBoxLayout,
-    QLabel, QLayout, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGraphicsView, QLabel,
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QSizePolicy, QWidget)
 import iconlar
 
 class Ui_mainWindow(object):
@@ -18,7 +16,7 @@ class Ui_mainWindow(object):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
         mainWindow.setEnabled(True)
-        mainWindow.setFixedSize(976, 655)
+        mainWindow.resize(976, 655)
         icon = QIcon()
         icon.addFile(u"iconlar/icon.png", QSize(), QIcon.Normal, QIcon.Off)
         mainWindow.setWindowIcon(icon)
@@ -29,6 +27,7 @@ class Ui_mainWindow(object):
 "backgroun-color: rgba(255, 255, 255,50)\n"
 "}\n"
 "")
+        mainWindow.setLocale(QLocale(QLocale.English, QLocale.UnitedStates))
         mainWindow.setIconSize(QSize(30, 30))
         mainWindow.setAnimated(True)
         mainWindow.setDocumentMode(False)
@@ -82,15 +81,9 @@ class Ui_mainWindow(object):
         self.centralwidget = QWidget(mainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.comboBox = QComboBox(self.centralwidget)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
         self.comboBox.setObjectName(u"comboBox")
         self.comboBox.setEnabled(True)
-        self.comboBox.setGeometry(QRect(190, 71, 581, 31))
+        self.comboBox.setGeometry(QRect(190, 70, 581, 31))
         self.comboBox.setContextMenuPolicy(Qt.DefaultContextMenu)
         self.comboBox.setStyleSheet(u"background-color: rgba(255, 255, 255,50)")
         self.comboBox.setEditable(True)
@@ -99,66 +92,28 @@ class Ui_mainWindow(object):
         self.comboBox.setFrame(True)
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(760, 590, 211, 20))
+        self.label.setGeometry(QRect(760, 610, 211, 20))
         self.label.setStyleSheet(u"background-color: rgba(255, 255, 255);\n"
 "border : none;\n"
 "color: rgba(255, 255, 255,100)")
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(190, 520, 581, 41))
-        self._2 = QHBoxLayout(self.widget)
-        self._2.setSpacing(24)
-        self._2.setObjectName(u"_2")
-        self._2.setSizeConstraint(QLayout.SetMinimumSize)
-        self._2.setContentsMargins(0, 0, 0, 0)
-        self.pushButton = QPushButton(self.widget)
-        self.pushButton.setObjectName(u"pushButton")
-        font2 = QFont()
-        font2.setFamilies([u"Noto Sans"])
-        font2.setPointSize(14)
-        self.pushButton.setFont(font2)
-        self.pushButton.setStyleSheet(u"")
-        icon7 = QIcon()
-        icon7.addFile(u"iconlar/buyicon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon7)
-        self.pushButton.setIconSize(QSize(24, 24))
-
-        self._2.addWidget(self.pushButton)
-
-        self.pushButton_2 = QPushButton(self.widget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setMinimumSize(QSize(0, 0))
-        self.pushButton_2.setBaseSize(QSize(0, 0))
-        self.pushButton_2.setFont(font2)
-        icon8 = QIcon()
-        icon8.addFile(u"iconlar/Sellicon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_2.setIcon(icon8)
-        self.pushButton_2.setIconSize(QSize(24, 24))
-
-        self._2.addWidget(self.pushButton_2)
-
         self.graphicsView = QGraphicsView(self.centralwidget)
         self.graphicsView.setObjectName(u"graphicsView")
         self.graphicsView.setGeometry(QRect(190, 150, 581, 351))
         self.graphicsView.setStyleSheet(u"background-color: rgb(0, 0, 0)")
+        self.pushButton_2 = QPushButton(self.centralwidget)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setGeometry(QRect(780, 70, 41, 31))
+        icon7 = QIcon()
+        icon7.addFile(u"iconlar/refresh_24dp.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_2.setIcon(icon7)
+        self.pushButton_2.setIconSize(QSize(20, 20))
         mainWindow.setCentralWidget(self.centralwidget)
-        self.pushButton_2.raise_()
-        self.comboBox.raise_()
-        self.pushButton.raise_()
-        self.pushButton_2.raise_()
-        self.pushButton.raise_()
-        self.pushButton_2.raise_()
-        self.label.raise_()
-        self.graphicsView.raise_()
-        self.statusbar = QStatusBar(mainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        mainWindow.setStatusBar(self.statusbar)
         self.menubar = QMenuBar(mainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 976, 22))
         self.menuMenu = QMenu(self.menubar)
         self.menuMenu.setObjectName(u"menuMenu")
-        self.menuMenu.setGeometry(QRect(215, 123, 168, 149))
+        self.menuMenu.setGeometry(QRect(199, 126, 168, 149))
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -192,16 +147,8 @@ class Ui_mainWindow(object):
         self.actionContact_2.setText(QCoreApplication.translate("mainWindow", u"Contact", None))
         self.actionLog_Out.setText(QCoreApplication.translate("mainWindow", u"Information", None))
         self.actionLog_Out_2.setText(QCoreApplication.translate("mainWindow", u"Log Out", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("mainWindow", u"New Item", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("mainWindow", u"New Item", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("mainWindow", u"New Item", None))
-        self.comboBox.setItemText(3, QCoreApplication.translate("mainWindow", u"New Item", None))
-        self.comboBox.setItemText(4, QCoreApplication.translate("mainWindow", u"New Item", None))
-        self.comboBox.setItemText(5, QCoreApplication.translate("mainWindow", u"New Item", None))
-
         self.label.setText(QCoreApplication.translate("mainWindow", u"Copyright \u00a9 2024-All Rights Reserved", None))
-        self.pushButton.setText(QCoreApplication.translate("mainWindow", u"Buy", None))
-        self.pushButton_2.setText(QCoreApplication.translate("mainWindow", u"Sell", None))
+        self.pushButton_2.setText("")
         self.menuMenu.setTitle(QCoreApplication.translate("mainWindow", u"Menu", None))
     # retranslateUi
 

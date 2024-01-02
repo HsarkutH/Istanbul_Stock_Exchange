@@ -167,6 +167,7 @@ class Ui_mainWindow(object):
         self.actionLog_Out_2.setText(QCoreApplication.translate("mainWindow", u"Log Out", None))
         self.label.setText(QCoreApplication.translate("mainWindow", u"Copyright \u00a9 2024-All Rights Reserved", None))
         self.pushButton_2.setText("")
+        self.pushButton.setText(QCoreApplication.translate("mainWindow", u"Show", None))
         self.label_2.setText(QCoreApplication.translate("mainWindow", u"     You can Buy", None))
         self.label_3.setText(QCoreApplication.translate("mainWindow", u"     You can Sell", None))
         self.menuMenu.setTitle(QCoreApplication.translate("mainWindow", u"Menu", None))

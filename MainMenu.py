@@ -5,11 +5,12 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QCursor, QFont, QFontDatabase, QGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
+    QTransform, QDesktopServices)
 from PySide6.QtWidgets import (QApplication, QComboBox, QGraphicsView, QLabel,
     QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QWidget)
+    QSizePolicy, QWidget, QMessageBox)
 import iconlar
+import sqlite3
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
@@ -154,6 +155,11 @@ class Ui_mainWindow(object):
         self.retranslateUi(mainWindow)
 
         QMetaObject.connectSlotsByName(mainWindow)
+
+        self.databaseVeriCek()
+        self.actionLog_Out_2.triggered.connect(self.logout_button)
+        self.actionLog_Out.triggered.connect(self.info_button)
+        self.actionContact_2.triggered.connect(self.contact_us)
     # setupUi
 
     def retranslateUi(self, mainWindow):
@@ -172,6 +178,31 @@ class Ui_mainWindow(object):
         self.label_3.setText(QCoreApplication.translate("mainWindow", u"     You can Sell", None))
         self.menuMenu.setTitle(QCoreApplication.translate("mainWindow", u"Menu", None))
     # retranslateUi
+
+    def logout_button(self):
+        app.exit()
+
+    def info_button(self):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText('Hüseyin Sarkut\nYiğit Emre Ünlü\nPerviz Alekperov\nMuhammed Aydın')
+        msg_box.setWindowTitle('Team Info')
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec()
+    def databaseVeriCek(self):
+        self.comboBox.clear()
+        connection = sqlite3.connect("stock_data.db")
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT ticker FROM stock_data")
+        veriler = cursor.fetchall()
+        for veri in veriler:
+            self.comboBox.addItem(veri[0])
+        connection.close()
+
+    def contact_us(self):
+        url = QUrl("https://github.com/HsarkutH/Istanbul_Stock_Exchange")
+        QDesktopServices.openUrl(url)
 
 if __name__ == "__main__":
         app = QApplication([])

@@ -11,7 +11,12 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QGraphicsView, QLabel,
     QSizePolicy, QWidget, QMessageBox)
 import iconlar
 import sqlite3
-
+import yfinance as yf
+import datetime
+import pandas_ta as ta
+import matplotlib.pyplot as plt
+from mplfinance.original_flavor import candlestick_ohlc
+import matplotlib.dates as mdates
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
@@ -160,6 +165,42 @@ class Ui_mainWindow(object):
         self.actionLog_Out_2.triggered.connect(self.logout_button)
         self.actionLog_Out.triggered.connect(self.info_button)
         self.actionContact_2.triggered.connect(self.contact_us)
+        #comboboxtan stoc isimlerini çekme
+        stock_Symbol =self.comboBox.currentText()
+        #10 yıllık zaman periyodu ayarlama
+        end_date =datetime.date.today()
+        start_date =end_date - datetime.timedelta(days=365*10)
+        stock_data = yf.download(stock_Symbol,start=start_date,end=end_date)
+        #indicator ayarlama
+        sma =stock_data.ta.sma(length=20)
+        rsi = stock_data.ta.rsi(length=14)
+        #graph için verileri ayarlama
+        ohlc_data = stock_data[['Open','High','Low','Close','Volume']].reset_index()
+        ohlc_data['Date'] = ohlc_data['Date'].map(mdates.date2num)
+        #grafiği plotlama
+        fig, ax = plt.subplots()
+        candlestick_ohlc(ax,ohlc_data.values,width=0.6,colorup ='green',colordown='red')
+        # Customize the graph
+        plt.xlabel('Date')
+        plt.ylabel('Price')
+        plt.title('Stock Candlestick Chart')
+
+        # Display the SMA indicator as a line graph
+        plt.plot(stock_data.index, sma, label='SMA')
+
+        # Display the RSI indicator as a line graph
+        plt.plot(stock_data.index, rsi, label='RSI')
+
+        # Customize the graph
+        plt.xlabel('Date')
+        plt.ylabel('Indicator Value')
+        plt.title('Stock Indicator Line Chart')
+        plt.legend()
+
+        # Display the graph
+        plt.show()
+
+
     # setupUi
 
     def retranslateUi(self, mainWindow):

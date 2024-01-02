@@ -107,6 +107,24 @@ class Ui_mainWindow(object):
         icon7.addFile(u"iconlar/refresh_24dp.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_2.setIcon(icon7)
         self.pushButton_2.setIconSize(QSize(20, 20))
+        self.pushButton = QPushButton(self.centralwidget)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(700, 510, 71, 21))
+        self.pushButton.setStyleSheet(u"font: 700 9pt \"Segoe UI\";")
+        icon8 = QIcon()
+        icon8.addFile(u"iconlar/visibility_white_24dp.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton.setIcon(icon8)
+        self.pushButton.setIconSize(QSize(18, 18))
+        self.label_2 = QLabel(self.centralwidget)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(220, 520, 111, 31))
+        self.label_2.setStyleSheet(u"background-color: rgba(255, 255, 255,50);\n"
+                                   "font: 700 9pt \"Segoe UI\";")
+        self.label_3 = QLabel(self.centralwidget)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(360, 520, 111, 31))
+        self.label_3.setStyleSheet(u"background-color: rgba(255, 255, 255,50);\n"
+                                   "font: 700 9pt \"Segoe UI\";")
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(mainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -149,6 +167,8 @@ class Ui_mainWindow(object):
         self.actionLog_Out_2.setText(QCoreApplication.translate("mainWindow", u"Log Out", None))
         self.label.setText(QCoreApplication.translate("mainWindow", u"Copyright \u00a9 2024-All Rights Reserved", None))
         self.pushButton_2.setText("")
+        self.label_2.setText(QCoreApplication.translate("mainWindow", u"     You can Buy", None))
+        self.label_3.setText(QCoreApplication.translate("mainWindow", u"     You can Sell", None))
         self.menuMenu.setTitle(QCoreApplication.translate("mainWindow", u"Menu", None))
     # retranslateUi
 

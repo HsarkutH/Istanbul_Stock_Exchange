@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icon">
+    <file>visibility_white_24dp.svg</file>
     <file>Icon.qrc</file>
     <file>admin_panel_settings_black_24dp.svg</file>
     <file>delete user icon.svg</file>

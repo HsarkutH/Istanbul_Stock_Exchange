@@ -11,6 +11,7 @@ import iconlar
 import Helper
 import LogIn
 import SigUp
+import AdminWindow
 
 class Ui_WelcomePage(object):
     def setupUi(self, WelcomePage):
@@ -62,7 +63,7 @@ class Ui_WelcomePage(object):
 
         self.LogInbutton.clicked.connect(self.open_login_menu)
         self.SignUpbutton.clicked.connect(self.open_signup_menu)
-
+        self.AdminButton.clicked.connect(self.open_admin_menu)
         QMetaObject.connectSlotsByName(WelcomePage)
     # setupUi
 
@@ -90,6 +91,12 @@ class Ui_WelcomePage(object):
         ui_signup_menu.pushButton.clicked.connect(connect_signup)
         self.signup_menum.show()
 
+    def open_admin_menu(self):
+        self.admin_menum = QMainWindow()
+        ui_admin_menu = AdminWindow.Ui_AdminWindow()
+        ui_admin_menu.setupUi(self.admin_menum)
+        ui_admin_menu.retranslateUi(self.admin_menum)
+        self.admin_menum.show()
     def retranslateUi(self, WelcomePage):
         WelcomePage.setWindowTitle(QCoreApplication.translate("WelcomePage", u"Istanbul Exchange Software", None))
         self.IESicoNlabel.setText("")

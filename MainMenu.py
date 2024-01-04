@@ -193,7 +193,7 @@ class Ui_mainWindow(object):
 
         # Customize the graph
         plt.xlabel('Date')
-        plt.ylabel('Indicator Value')
+        plt.ylabel('Price')
         plt.title('Stock Indicator Line Chart')
         plt.legend()
 

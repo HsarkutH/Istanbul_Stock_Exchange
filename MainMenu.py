@@ -17,6 +17,12 @@ import pandas_ta as ta
 import matplotlib.pyplot as plt
 from mplfinance.original_flavor import candlestick_ohlc
 import matplotlib.dates as mdates
+import json
+
+with open('day_value.json', 'r') as file:
+    data = json.load(file)
+gun_sayisi = data.get('gunsayisi')
+
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
@@ -169,7 +175,7 @@ class Ui_mainWindow(object):
         stock_Symbol =self.comboBox.currentText()
         #10 yıllık zaman periyodu ayarlama
         end_date =datetime.date.today()
-        start_date =end_date - datetime.timedelta(days=365*10)
+        start_date =end_date - datetime.timedelta(days=gun_sayisi)
         stock_data = yf.download(stock_Symbol,start=start_date,end=end_date)
         #indicator ayarlama
         sma =stock_data.ta.sma(length=20)

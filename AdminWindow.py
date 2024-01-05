@@ -8,6 +8,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
     QSizePolicy, QSpinBox, QWidget)
 import iconlar
+import json
 
 class Ui_AdminWindow(object):
     def setupUi(self, AdminWindow):
@@ -70,7 +71,10 @@ class Ui_AdminWindow(object):
 
         QMetaObject.connectSlotsByName(AdminWindow)
     # setupUi
-
+        self.refresh.clicked.connect(self.gunCek)
+        with open('day_value.json', 'r') as file:
+            data = json.load(file)
+            self.Gunsaygac.setValue(data.get('gunsayisi'))
     def retranslateUi(self, AdminWindow):
         AdminWindow.setWindowTitle(QCoreApplication.translate("AdminWindow", u"Administrator", None))
         self.refresh.setText(QCoreApplication.translate("AdminWindow", u"Day's Refresh", None))
@@ -84,6 +88,11 @@ class Ui_AdminWindow(object):
         self.UserList.setCurrentText("")
         self.logout.setText(QCoreApplication.translate("AdminWindow", u"LogOut", None))
         self.Userslisttxt.setText(QCoreApplication.translate("AdminWindow", u" User's List", None))
+    def gunCek(self):
+        gunSayisi = self.Gunsaygac.value()
+        data = {'gunsayisi': gunSayisi}
+        with open('day_value.json', 'w') as file:
+            json.dump(data, file, indent=4)
 
 if __name__ == "__main__":
         app = QApplication([])

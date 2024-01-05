@@ -49,21 +49,10 @@ class Ui_WelcomePage(object):
         self.SignUpbutton = QPushButton(WelcomePage)
         self.SignUpbutton.setObjectName(u"SignUpbutton")
         self.SignUpbutton.setGeometry(QRect(210, 260, 91, 25))
-        self.AdminButton = QPushButton(WelcomePage)
-        self.AdminButton.setObjectName(u"AdminButton")
-        self.AdminButton.setGeometry(QRect(260, 10, 41, 31))
-        icon1 = QIcon()
-        icon1.addFile(u"iconlar/Profileicon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.AdminButton.setIcon(icon1)
-        self.AdminButton.setIconSize(QSize(27, 27))
-
         self.retranslateUi(WelcomePage)
-
         self.LogInbutton.setDefault(False)
-
         self.LogInbutton.clicked.connect(self.open_login_menu)
         self.SignUpbutton.clicked.connect(self.open_signup_menu)
-        self.AdminButton.clicked.connect(self.open_admin_menu)
         QMetaObject.connectSlotsByName(WelcomePage)
     # setupUi
 

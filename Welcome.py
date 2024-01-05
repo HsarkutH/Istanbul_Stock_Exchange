@@ -104,6 +104,19 @@ class Ui_WelcomePage(object):
         self.SignUpbutton.setText(QCoreApplication.translate("WelcomePage", u"Sign up", None))
     # retranslateUi
 
+    def open_login_menu(self):  #Main Acildiginda LogIn verileri dogruysa LogIn i kapat
+        self.login_menum = QMainWindow()
+        ui_login_menu = LogIn.Ui_Form()
+        ui_login_menu.setupUi(self.login_menum)
+
+        def connect_login():
+            ui_login_menu.login()
+            self.login_menum.close()  # LogIn sayfasını kapat
+
+        ui_login_menu.pushButton.clicked.connect(connect_login)
+        self.login_menum.show()
+
+
 if __name__ == "__main__":
     app = QApplication([])
 

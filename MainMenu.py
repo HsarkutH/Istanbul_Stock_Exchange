@@ -7,7 +7,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
                            QPainter, QPalette, QPixmap, QRadialGradient,
                            QTransform, QDesktopServices)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
-                               QMenu, QMenuBar, QProgressBar, QPushButton,
+                               QMenu, QMenuBar, QPushButton,
                                QSizePolicy, QWidget, QMessageBox)
 import iconlar
 import sqlite3
@@ -153,11 +153,6 @@ class Ui_mainWindow(object):
         self.ChooseIndictrtxt.setGeometry(QRect(310, 90, 111, 16))
         self.ChooseIndictrtxt.setFont(font3)
         self.ChooseIndictrtxt.setStyleSheet(u"background-color: rgba(255, 255, 255,)")
-        self.progressBar = QProgressBar(self.MaininIci)
-        self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setGeometry(QRect(420, 180, 201, 21))
-        self.progressBar.setValue(50)
-        self.progressBar.setOrientation(Qt.Horizontal)
         mainWindow.setCentralWidget(self.MaininIci)
         self.menubar = QMenuBar(mainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -192,6 +187,8 @@ class Ui_mainWindow(object):
         self.Log_Out.triggered.connect(self.logout_button)
         self.Information.triggered.connect(self.info_button)
         self.Contact_2.triggered.connect(self.contact_us)
+        self.ShowButton.clicked.connect(self.show_graph)
+    def show_graph(self):
         # comboboxtan stoc isimlerini çekme
         stock_Symbol = self.SymbolBox.currentText()
         # 10 yıllık zaman periyodu ayarlama

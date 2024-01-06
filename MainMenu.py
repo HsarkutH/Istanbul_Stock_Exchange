@@ -140,6 +140,8 @@ class Ui_mainWindow(object):
         self.IndicatorBox1.setObjectName(u"IndicatorBox1")
         self.IndicatorBox1.setGeometry(QRect(100, 110, 251, 31))
         self.IndicatorBox1.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
+        indicators = self.combineData('indicator_momentum.json', 'indicator_overlap.json')
+        self.fillCombobox(indicators)
         self.ChooseSymboltxt = QLabel(self.MaininIci)
         self.ChooseSymboltxt.setObjectName(u"ChooseSymboltxt")
         self.ChooseSymboltxt.setGeometry(QRect(300, 30, 131, 16))
@@ -271,6 +273,38 @@ class Ui_mainWindow(object):
         for veri in veriler:
             self.SymbolBox.addItem(veri[0])
         connection.close()
+
+
+    def jsonPull(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+            return data
+        except Exception as e:
+            print(f"Json dosyası okunamadı {e}")
+            return None
+
+    def combineData(self, filename1, filename2):
+        data1 = self.jsonPull(filename1)
+        data2 = self.jsonPull(filename2)
+
+        combinedValues = []
+
+        if data1:
+            combinedValues.extend(data1.values())
+
+        if data2:
+            combinedValues.extend(data2.values())
+
+        return combinedValues
+
+    def fillCombobox(self, data):
+        if data:
+            for item in data:
+                self.IndicatorBox1.addItem(str(item))
+                self.IndicatorBox2.addItem(str(item))
+
+
 
     def contact_us(self):
         url = QUrl("https://github.com/HsarkutH/Istanbul_Stock_Exchange")

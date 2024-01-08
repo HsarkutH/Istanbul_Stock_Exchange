@@ -134,12 +134,8 @@ class Ui_mainWindow(object):
                                     "font: 700 9pt \"Segoe UI\";")
         self.IndicatorBox2 = QComboBox(self.MaininIci)
         self.IndicatorBox2.setObjectName(u"IndicatorBox2")
-        self.IndicatorBox2.setGeometry(QRect(390, 110, 251, 31))
+        self.IndicatorBox2.setGeometry(QRect(230, 110, 251, 31))
         self.IndicatorBox2.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
-        self.IndicatorBox1 = QComboBox(self.MaininIci)
-        self.IndicatorBox1.setObjectName(u"IndicatorBox1")
-        self.IndicatorBox1.setGeometry(QRect(100, 110, 251, 31))
-        self.IndicatorBox1.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
         indicators = self.combineData('indicator_momentum.json', 'indicator_overlap.json')
         self.fillCombobox(indicators)
         self.ChooseSymboltxt = QLabel(self.MaininIci)
@@ -302,8 +298,8 @@ class Ui_mainWindow(object):
     def fillCombobox(self, data):
         if data:
             for item in data:
-                self.IndicatorBox1.addItem(str(item))
-                self.IndicatorBox2.addItem(str(item))
+
+              self.IndicatorBox2.addItem(str(item))
 
 
 

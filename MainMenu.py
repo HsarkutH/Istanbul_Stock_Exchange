@@ -194,7 +194,7 @@ class Ui_mainWindow(object):
         start_date = end_date - datetime.timedelta(days=gun_sayisi)
         stock_data = yf.download(stock_Symbol, start=start_date, end=end_date)
         # indicator ayarlama
-        sma = stock_data.ta.sma(length=20)
+
         rsi = stock_data.ta.rsi(length=14)
         # graph için verileri ayarlama
         ohlc_data = stock_data[['Open', 'High', 'Low', 'Close', 'Volume']].reset_index()
@@ -208,9 +208,12 @@ class Ui_mainWindow(object):
         plt.title('Stock Candlestick Chart')
 
         # Display the SMA indicator as a line graph
-        plt.plot(stock_data.index, sma, label='SMA')
+
 
         # Display the RSI indicator as a line graph
+        if self.IndicatorBox2.currentText() == 'sma':
+            sma = stock_data.ta.sma(length=20)
+            plt.plot(stock_data.index, sma, label='SMA')
         plt.plot(stock_data.index, rsi, label='RSI')
 
         # Customize the graph
@@ -274,7 +277,7 @@ class Ui_mainWindow(object):
 
     def jsonPull(self, filename):
         try:
-            with open(filename, 'r') as file:
+            with open(filename, 'r', encoding='ISO-8859-1') as file:
                 data = json.load(file)
             return data
         except Exception as e:

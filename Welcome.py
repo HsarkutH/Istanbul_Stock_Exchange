@@ -56,17 +56,6 @@ class Ui_WelcomePage(object):
         QMetaObject.connectSlotsByName(WelcomePage)
     # setupUi
 
-    def open_login_menu(self):
-        self.login_menum = QMainWindow()
-        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
-        ui_login_menu = LogIn.Ui_Form()
-        ui_login_menu.setupUi(self.login_menum)
-        # Ana pencereyi gösterin
-        def connect_login():
-            ui_login_menu.login()
-        ui_login_menu.pushButton.clicked.connect(connect_login)
-        self.login_menum.show()
-
     def open_signup_menu(self):
         self.signup_menum = QMainWindow()
         # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
@@ -92,7 +81,6 @@ class Ui_WelcomePage(object):
         self.LogInbutton.setText(QCoreApplication.translate("WelcomePage", u"Log In", None))
         self.SignUpbutton.setText(QCoreApplication.translate("WelcomePage", u"Sign up", None))
     # retranslateUi
-
     def open_login_menu(self):  #Main Acildiginda LogIn verileri dogruysa LogIn i kapat
         self.login_menum = QMainWindow()
         ui_login_menu = LogIn.Ui_Form()

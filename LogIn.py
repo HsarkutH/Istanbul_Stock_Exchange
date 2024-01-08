@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QLineEdit, QPushButton,
 import iconlar
 import sqlite3
 import MainMenu
+import AdminWindow
 
 class Ui_Form(object):
 
@@ -126,6 +127,8 @@ class Ui_Form(object):
                 msg_box.setWindowTitle('Warning')
                 msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box.exec()
+            elif username == "admin" and password == "admin":
+                self.open_admin_menu()
             else:
                 self.open_main_menu()
     def open_main_menu(self):
@@ -134,10 +137,33 @@ class Ui_Form(object):
         ui_main_menu = MainMenu.Ui_mainWindow()
         ui_main_menu.setupUi(self.main_menum)
         ui_main_menu.retranslateUi(self.main_menum)
+        ui_main_menu.ShowButton.clicked.connect(lambda: self.show_graph(ui_main_menu))
+        ui_main_menu.Log_Out.triggered.connect(lambda: self.logout_button(ui_main_menu))
         # Ana pencereyi gösterin
         self.main_menum.show()
 
+    def open_admin_menu(self):
+        self.admin_menum = QMainWindow()
+        # Ui_mainWindow'daki arayüzü bu ana pencereye yükleyin
+        ui_admin_menu = AdminWindow.Ui_AdminWindow()
+        ui_admin_menu.setupUi(self.admin_menum)
+        ui_admin_menu.retranslateUi(self.admin_menum)
+        ui_admin_menu.refresh.clicked.connect(lambda: self.gunCek(ui_admin_menu))
+        self.admin_menum.show()
 
+    def gunCek(self, ui_admin_menu):
+        # ui_admin_menu parametresi üzerinden gunCek fonksiyonunu çağırabilirsiniz
+        ui_admin_menu.gunCek()
+        print("refresh düğmesine tıklandı.")
+
+    def show_graph(self, ui_main_menu):
+        ui_main_menu.show_graph()
+        print("Show düğmesine tıklandı.")
+
+    def logout_button(self, ui_main_menu):
+        #app = QApplication.instance()
+        ui_main_menu.logout_button()
+        print("Logged out.")
 if __name__ == "__main__":
     app = QApplication([])
 

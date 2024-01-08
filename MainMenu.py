@@ -253,6 +253,7 @@ class Ui_mainWindow(object):
         # retranslateUi
 
     def logout_button(self):
+        app = QApplication.instance()
         app.exit()
 
     def info_button(self):

@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
     QSizePolicy, QSpinBox, QWidget)
 import iconlar
 import json
+import sqlite3
 
 class Ui_AdminWindow(object):
     def setupUi(self, AdminWindow):
@@ -64,8 +65,8 @@ class Ui_AdminWindow(object):
         self.Gunsaygac.setObjectName(u"Gunsaygac")
         self.Gunsaygac.setGeometry(QRect(30, 170, 71, 22))
         self.Gunsaygac.setAcceptDrops(False)
-        self.Gunsaygac.setMinimum(1)
-        self.Gunsaygac.setMaximum(365)
+        self.Gunsaygac.setMinimum(30) ## En az 30 gün
+        self.Gunsaygac.setMaximum(1825) ## 5 Sene
 
         self.retranslateUi(AdminWindow)
 
@@ -75,6 +76,9 @@ class Ui_AdminWindow(object):
         with open('day_value.json', 'r') as file:
             data = json.load(file)
             self.Gunsaygac.setValue(data.get('gunsayisi'))
+        self.memberCek()
+        self.userdelete.clicked.connect(self.memberSil)
+        self.logout.clicked.connect(self.logutbuttonAdmin)
     def retranslateUi(self, AdminWindow):
         AdminWindow.setWindowTitle(QCoreApplication.translate("AdminWindow", u"Administrator", None))
         self.refresh.setText(QCoreApplication.translate("AdminWindow", u"Day's Refresh", None))
@@ -93,6 +97,32 @@ class Ui_AdminWindow(object):
         data = {'gunsayisi': gunSayisi}
         with open('day_value.json', 'w') as file:
             json.dump(data, file, indent=4)
+
+
+    def memberCek(self):
+        self.UserList.clear()
+        connection = sqlite3.connect("user.db")
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT username FROM users")
+        veriler = cursor.fetchall()
+        for veri in veriler:
+            self.UserList.addItem(veri[0])
+        connection.close()
+
+    def memberSil(self):
+        silinecekMember = self.UserList.currentText()
+        connection = sqlite3.connect("user.db")
+        cursor = connection.cursor()
+
+        cursor.execute("DELETE FROM users WHERE username = ?", (silinecekMember,))
+        connection.commit()
+        self.UserList.clear()
+        self.memberCek()
+        connection.close()
+    def logutbuttonAdmin(self):
+        app = QApplication.instance()
+        app.exit()
 
 if __name__ == "__main__":
         app = QApplication([])

@@ -193,12 +193,12 @@ class Ui_mainWindow(object):
         end_date = datetime.date.today()
         start_date = end_date - datetime.timedelta(days=gun_sayisi)
         stock_data = yf.download(stock_Symbol, start=start_date, end=end_date)
-        # indicator ayarlama
 
-        rsi = stock_data.ta.rsi(length=14)
+
         # graph için verileri ayarlama
         ohlc_data = stock_data[['Open', 'High', 'Low', 'Close', 'Volume']].reset_index()
         ohlc_data['Date'] = ohlc_data['Date'].map(mdates.date2num)
+
         # grafiği plotlama
         fig, ax = plt.subplots()
         candlestick_ohlc(ax, ohlc_data.values, width=0.6, colorup='green', colordown='red')
@@ -207,19 +207,250 @@ class Ui_mainWindow(object):
         plt.ylabel('Price')
         plt.title('Stock Candlestick Chart')
 
-        # Display the SMA indicator as a line graph
-
-
-        # Display the RSI indicator as a line graph
         if self.IndicatorBox2.currentText() == 'sma':
-            sma = stock_data.ta.sma(length=20)
-            plt.plot(stock_data.index, sma, label='SMA')
-        plt.plot(stock_data.index, rsi, label='RSI')
+            sma20 = stock_data.ta.sma(close= stock_data['Close'] ,length=20)
+            plt.plot(stock_data.index, sma20, label='SMA-20')
+            sma10 = stock_data.ta.sma(close= stock_data['Close'], length=10)
+            plt.plot(stock_data.index, sma10, label='SMA-10')
+        elif self.IndicatorBox2.currentText() == 'rsi':
+            rsi = stock_data.ta.rsi(length=14)
+            plt.plot(stock_data.index, rsi, label='RSI')
+        elif self.IndicatorBox2.currentText() == 'ao':
+            ao = stock_data.ta.ao(fast=5, slow=34)
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, ao, label='AO')
+        elif self.IndicatorBox2.currentText() == 'apo':
+            apo = stock_data.ta.apo()
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, apo, label='APO')
+        elif self.IndicatorBox2.currentText() =='bias':
+            bias = stock_data.ta.dpo()
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, bias, label= 'BIAS')
+        elif self.IndicatorBox2.currentText() == 'bop':
+            bop = stock_data.ta.bop()
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, bop, label= 'BOP')
+        elif self.IndicatorBox2.currentText() == 'brar':
+            brar = stock_data.ta.brar(length=9, scalar=14)
+            plt.plot(stock_data.index, brar, label='BRAR')
+        elif self.IndicatorBox2.currentText() == 'cci':
+            cci = stock_data.ta.cci(length=10)
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, cci, label='CCI')
+        elif self.IndicatorBox2.currentText() == 'cfo':
+            cfo = stock_data.ta.cfo()
+            plt.plot(stock_data.index, cfo, label='CFO')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'cg':
+            cg = stock_data.ta.cg(length=10)
+            plt.plot(stock_data.index, cg, label='CG')
+        elif self.IndicatorBox2.currentText() == 'cmo':
+            cmo = stock_data.ta.cmo(length=14)
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, cmo, label='CMO')
+        elif self.IndicatorBox2.currentText() == 'coppock':
+            coppock10 = stock_data.ta.coppock(length=10)
+            coppock20 = stock_data.ta.coppock(length=20)
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, coppock10, label='COPPOCK-10')
+            plt.plot(stock_data.index, coppock20, label='COPPOCK-20')
+        elif self.IndicatorBox2.currentText() == 'cti':
+            cti9 = stock_data.ta.cti(length=9)
+            cti14 = stock_data.ta.cti(length=14)
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index, cti9, label='CTI-9')
+            plt.plot(stock_data.index, cti14, label='CTI-14')
+        elif self.IndicatorBox2.currentText() == 'dm':
+            dm = stock_data.ta.dm(length=3)
+            plt.plot(stock_data.index, dm, label='DM')
+        elif self.IndicatorBox2.currentText() == 'er':
+            er = stock_data.ta.er(length=4)
+            plt.plot(stock_data.index, er, label= 'ER')
+        elif self.IndicatorBox2.currentText() == 'eri':
+            eri = stock_data.ta.eri()
+            plt.plot(stock_data.index, eri, label='ERI')
+        elif self.IndicatorBox2.currentText() == 'fisher':
+            fisher = stock_data.ta.fisher(length=9)
+            plt.plot(stock_data.index, fisher, label='FISHER')
+        elif self.IndicatorBox2.currentText() == 'inertia':
+            inertia = stock_data.ta.inertia(length=14)
+            plt.plot(stock_data.index,inertia,label= 'INERTIA')
+        elif self.IndicatorBox2.currentText() == 'kdj':
+            kdj = stock_data.ta.kdj(length=9, k_slowing=3)
+            plt.plot(stock_data.index,kdj,label='KDJ')
+        elif self.IndicatorBox2.currentText() == 'kst':
+            kst = stock_data.ta.kst()
+            plt.plot(stock_data.index,kst,label='KST')
+        elif self.IndicatorBox2.currentText() == 'macd':
+            macd = stock_data.ta.macd()
+            plt.plot(stock_data.index,macd,label = 'MACD')
+        elif self.IndicatorBox2.currentText() == 'mom':
+            mom = stock_data.ta.mom()
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index,mom,label='MOM')
+        elif self.IndicatorBox2.currentText() == 'pgo':
+            pgo = stock_data.ta.pgo()
+            plt.axhline(y=0, color='r', linestyle='--')
+            plt.plot(stock_data.index,pgo,label='PGO')
+        elif self.IndicatorBox2.currentText() == 'ppo':
+            ppo=stock_data.ta.ppo()
+            plt.plot(stock_data.index,ppo,label='PPO')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'psl':
+            psl=stock_data.ta.psl()
+            plt.plot(stock_data.index,psl,label='PSL')
+        elif self.IndicatorBox2.currentText() == 'pvo':
+            pvo=stock_data.ta.pvo()
+            plt.plot(stock_data.index,pvo,label='PVO')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'qqe':
+            qqe=stock_data.ta.qqe()
+            plt.plot(stock_data.index,qqe,label='QQE')
+        elif self.IndicatorBox2.currentText() == 'roc':
+            roc=stock_data.ta.roc()
+            plt.plot(stock_data.index,roc,label='ROC')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'rsx':
+            rsx=stock_data.ta.rsx()
+            plt.plot(stock_data.index,rsx,label='RSX')
+        elif self.IndicatorBox2.currentText() == 'rvgi':
+            rvgi=stock_data.ta.rvgi()
+            plt.plot(stock_data.index,rvgi,label='RVGI')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'stc':
+            stc=stock_data.ta.stc()
+            plt.plot(stock_data.index,stc,label='STC')
+        elif self.IndicatorBox2.currentText() == 'slope':
+            slope=stock_data.ta.slope()
+            plt.plot(stock_data.index,slope,label='SLOPE')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'squeeze':
+            squeeze=stock_data.ta.squeeze()
+            plt.plot(stock_data.index,squeeze,label='SQUEEZE')
+        elif self.IndicatorBox2.currentText() == 'squeeze_pro':
+            squeeze_pro=stock_data.ta.squeeze_pro()
+            plt.plot(stock_data.index,squeeze_pro,label='SQUEEZE PRO')
+        elif self.IndicatorBox2.currentText() == 'stoch':
+            stoch=stock_data.ta.stoch()
+            print(stoch.columns)
+            plt.plot(stoch.index,stoch['STOCHk_14_3_3'],label='STOCH %K')
+            plt.plot(stoch.index,stoch['STOCHd_14_3_3'],label='STOCH %D')
+        elif self.IndicatorBox2.currentText() == 'stochrsi':
+            stochrsi=stock_data.ta.stochrsi()
+            plt.plot(stock_data.index,stochrsi,label='STOCH RSI')
+        elif self.IndicatorBox2.currentText() == 'td_seq':
+            td_seq=stock_data.ta.td_seq()
+            plt.plot(stock_data.index,td_seq,label='TD SEQ')
+        elif self.IndicatorBox2.currentText() == 'trix':
+            trix=stock_data.ta.trix()
+            plt.plot(stock_data.index,trix,label='TRIX')
+        elif self.IndicatorBox2.currentText() == 'tsi':
+            tsi=stock_data.ta.tsi()
+            plt.plot(stock_data.index,tsi,label='TSI')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'uo':
+            uo=stock_data.ta.uo()
+            plt.plot(stock_data.index,uo,label='UO')
+        elif self.IndicatorBox2.currentText() == 'willr':
+            willr=stock_data.ta.willr()
+            plt.plot(stock_data.index,willr,label='WILLR')
+            plt.axhline(y=0, color='r', linestyle='--')
+        elif self.IndicatorBox2.currentText() == 'alma':
+            alma=stock_data.ta.alma()
+            plt.plot(stock_data.index,alma,label='ALMA')
+        elif self.IndicatorBox2.currentText() == 'dema':
+            dema=stock_data.ta.dema()
+            plt.plot(stock_data.index,dema,label='DEMA')
+        elif self.IndicatorBox2.currentText() == 'ema':
+            ema=stock_data.ta.ema()
+            plt.plot(stock_data.index,ema,label='EMA')
+        elif self.IndicatorBox2.currentText() == 'fwma':
+            fwma=stock_data.ta.fwma()
+            plt.plot(stock_data.index,fwma,label='FWMA')
+        elif self.IndicatorBox2.currentText() == 'hilo':
+            hilo=stock_data.ta.hilo()
+            plt.plot(stock_data.index,hilo,label='HILO')
+        elif self.IndicatorBox2.currentText() == 'hl2':
+            hl2=stock_data.ta.hl2()
+            plt.plot(stock_data.index,hl2,label='HL2')
+        elif self.IndicatorBox2.currentText() == 'hlc3':
+            hlc3=stock_data.ta.hlc3()
+            plt.plot(stock_data.index,hlc3,label='HLC3')
+        elif self.IndicatorBox2.currentText() == 'hma':
+            hma = stock_data.ta.hma()
+            plt.plot(stock_data.index,hma,label='HMA')
+        elif self.IndicatorBox2.currentText() == 'hwma':
+            hwma = stock_data.ta.hwma()
+            plt.plot(stock_data.index,hwma,label='HWMA')
+        elif self.IndicatorBox2.currentText() == 'jma':
+            jma=stock_data.ta.jma()
+            plt.plot(stock_data.index,jma,label='JMA')
+        elif self.IndicatorBox2.currentText() == 'kama':
+            kama=stock_data.ta.kama()
+            plt.plot(stock_data.index,kama,label='KAMA')
+        elif self.IndicatorBox2.currentText() == 'linreg':
+            linreg = stock_data.ta.linreg()
+            plt.plot(stock_data.index,linreg,label='LINREG')
+        elif self.IndicatorBox2.currentText() == 'midpoint':
+            midpoint = stock_data.ta.midpoint()
+            plt.plot(stock_data.index,midpoint,label='MIDPOINT')
+        elif self.IndicatorBox2.currentText() == 'midprice':
+            midprice = stock_data.ta.midprice()
+            plt.plot(stock_data.index,midprice,label='MIDPRICE')
+        elif self.IndicatorBox2.currentText() == 'ohlc4':
+            ohlc4 = stock_data.ta.ohlc4()
+            plt.plot(stock_data.index,ohlc4, label='OHLC4')
+        elif self.IndicatorBox2.currentText() == 'pwma':
+            pwma = stock_data.ta.pwma()
+            plt.plot(stock_data.index,pwma,label='PWMA')
+        elif self.IndicatorBox2.currentText() == 'rma':
+            rma = stock_data.ta.rma()
+            plt.plot(stock_data.index,rma,label='RMA')
+        elif self.IndicatorBox2.currentText() == 'sinwma':
+            sinwma = stock_data.ta.sinwma()
+            plt.plot(stock_data.index,sinwma,label= 'SINWMA')
+        elif self.IndicatorBox2.currentText() == 'ssf':
+            ssf = stock_data.ta.ssf()
+            plt.plot(stock_data.index,ssf,label='SSF')
+        elif self.IndicatorBox2.currentText() == 'supertrend':
+            supertrend = stock_data.ta.supertrend()
+            plt.plot(stock_data.index,supertrend,label='SUPERTREND')
+        elif self.IndicatorBox2.currentText() == 'swma':
+            swma = stock_data.ta.swma()
+            plt.plot(stock_data.index,swma,label='SWMA')
+        elif self.IndicatorBox2.currentText() == 't3':
+            t3 = stock_data.ta.t3()
+            plt.plot(stock_data.index,t3,label='T3')
+        elif self.IndicatorBox2.currentText() == 'tema':
+            tema = stock_data.ta.tema()
+            plt.plot(stock_data.index,tema,label='TEMA')
+        elif self.IndicatorBox2.currentText() == 'trima':
+            trima = stock_data.ta.trima()
+            plt.plot(stock_data.index,trima,label='TRIMA')
+        elif self.IndicatorBox2.currentText() == 'vidya':
+            vidya = stock_data.ta.vidya()
+            plt.plot(stock_data.index,vidya,label='VIDYA')
+        elif self.IndicatorBox2.currentText() == 'vwap':
+            vwap=stock_data.ta.vwap()
+            plt.plot(stock_data.index,vwap,label='VWAP')
+        elif self.IndicatorBox2.currentText() == 'vwma':
+            vwma=stock_data.ta.vwma()
+            plt.plot(stock_data.index,vwma,label='VWMA')
+        elif self.IndicatorBox2.currentText() == 'wcp':
+            wcp=stock_data.ta.wcp()
+            plt.plot(stock_data.index,wcp,label='WCP')
+        elif self.IndicatorBox2.currentText() == 'wma':
+            wma=stock_data.ta.wma()
+            plt.plot(stock_data.index,wma,label='WMA')
+        elif self.IndicatorBox2.currentText() == 'zlma':
+            zlma=stock_data.ta.zlma()
+            plt.plot(stock_data.index,zlma,label='ZLMA')
 
         # Customize the graph
         plt.xlabel('Date')
         plt.ylabel('Price')
-        plt.title('Stock Indicator Line Chart')
+        plt.title(stock_Symbol)
         plt.legend()
 
         # Display the graph

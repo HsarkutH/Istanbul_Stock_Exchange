@@ -12,6 +12,9 @@ import Helper
 import LogIn
 import SigUp
 import AdminWindow
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 class Ui_WelcomePage(object):
     def setupUi(self, WelcomePage):

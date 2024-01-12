@@ -137,7 +137,7 @@ class Ui_Form(object):
         ui_main_menu = MainMenu.Ui_mainWindow()
         ui_main_menu.setupUi(self.main_menum)
         ui_main_menu.retranslateUi(self.main_menum)
-        ui_main_menu.ShowButton.clicked.connect(lambda: self.show_graph(ui_main_menu))
+       # ui_main_menu.ShowButton.clicked.connect(lambda: self.show_graph(ui_main_menu))
         ui_main_menu.Log_Out.triggered.connect(lambda: self.logout_button(ui_main_menu))
         # Ana pencereyi gösterin
         self.main_menum.show()

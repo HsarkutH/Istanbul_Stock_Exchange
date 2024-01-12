@@ -19,6 +19,8 @@ from mplfinance.original_flavor import candlestick_ohlc
 import matplotlib.dates as mdates
 import json
 import pandas as pd
+from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyCodes
 
 with open('day_value.json', 'r') as file:
     data = json.load(file)
@@ -147,6 +149,11 @@ class Ui_mainWindow(object):
         self.CurencyBox.setObjectName(u"CurencyBox")
         self.CurencyBox.setGeometry(QRect(310, 180, 111, 21))
         self.CurencyBox.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
+
+        currency_codes = CurrencyRates().get_rates("TRY").keys()
+        self.CurencyBox.addItem("TRY")
+        self.CurencyBox.addItems(currency_codes)
+
         self.ChoosCrncTxt = QLabel(self.MaininIci)
         self.ChoosCrncTxt.setObjectName(u"ChoosCrncTxt")
         self.ChoosCrncTxt.setGeometry(QRect(320, 150, 101, 16))
@@ -218,10 +225,15 @@ class Ui_mainWindow(object):
         # comboboxtan stoc isimlerini çekme
         stock_Symbol = self.SymbolBox.currentText()
         # 10 yıllık zaman periyodu ayarlama
-        end_date = datetime.date.today()
-        start_date = end_date - datetime.timedelta(days=gun_sayisi)
+        end_date = self.EndClndr.selectedDate().toPython()
+        start_date = self.StartClndr.selectedDate().toPython()
+        selected_currency = self.CurencyBox.currentText()
         stock_data = yf.download(stock_Symbol, start=start_date, end=end_date)
 
+        if selected_currency != "TRY":
+            c = CurrencyRates()
+            changed_currency = c.get_rate("TRY",selected_currency)
+            stock_data = stock_data *changed_currency
 
         # graph için verileri ayarlama
         ohlc_data = stock_data[['Open', 'High', 'Low', 'Close', 'Volume']].reset_index()

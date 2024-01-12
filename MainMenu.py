@@ -6,9 +6,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
                            QIcon, QImage, QKeySequence, QLinearGradient,
                            QPainter, QPalette, QPixmap, QRadialGradient,
                            QTransform, QDesktopServices)
-from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QCalendarWidget, QComboBox, QLabel, QMainWindow,
                                QMenu, QMenuBar, QPushButton,
-                               QSizePolicy, QWidget, QMessageBox)
+                               QSizePolicy, QTabWidget, QWidget, QMessageBox)
 import iconlar
 import sqlite3
 import yfinance as yf
@@ -46,6 +46,7 @@ class Ui_mainWindow(object):
         mainWindow.setIconSize(QSize(30, 30))
         mainWindow.setAnimated(True)
         mainWindow.setDocumentMode(False)
+        mainWindow.setTabShape(QTabWidget.Rounded)
         self.actionSearch = QAction(mainWindow)
         self.actionSearch.setObjectName(u"actionSearch")
         icon1 = QIcon()
@@ -117,25 +118,15 @@ class Ui_mainWindow(object):
                                         "color: rgba(255, 255, 255,100)")
         self.ShowButton = QPushButton(self.MaininIci)
         self.ShowButton.setObjectName(u"ShowButton")
-        self.ShowButton.setGeometry(QRect(330, 180, 71, 21))
+        self.ShowButton.setGeometry(QRect(330, 390, 71, 21))
         self.ShowButton.setStyleSheet(u"font: 700 9pt \"Segoe UI\";")
         icon7 = QIcon()
         icon7.addFile(u"iconlar/Show.png", QSize(), QIcon.Normal, QIcon.Off)
         self.ShowButton.setIcon(icon7)
         self.ShowButton.setIconSize(QSize(18, 18))
-        self.UcanBuy = QLabel(self.MaininIci)
-        self.UcanBuy.setObjectName(u"UcanBuy")
-        self.UcanBuy.setGeometry(QRect(60, 370, 111, 31))
-        self.UcanBuy.setStyleSheet(u"background-color: rgba(255, 255, 255,50);\n"
-                                   "font: 700 9pt \"Segoe UI\";")
-        self.UcanSell = QLabel(self.MaininIci)
-        self.UcanSell.setObjectName(u"UcanSell")
-        self.UcanSell.setGeometry(QRect(190, 370, 111, 31))
-        self.UcanSell.setStyleSheet(u"background-color: rgba(255, 255, 255,50);\n"
-                                    "font: 700 9pt \"Segoe UI\";")
         self.IndicatorBox2 = QComboBox(self.MaininIci)
         self.IndicatorBox2.setObjectName(u"IndicatorBox2")
-        self.IndicatorBox2.setGeometry(QRect(230, 110, 251, 31))
+        self.IndicatorBox2.setGeometry(QRect(240, 110, 251, 31))
         self.IndicatorBox2.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
         indicators = self.combineData('indicator_momentum.json', 'indicator_overlap.json')
         self.fillCombobox(indicators)
@@ -152,13 +143,49 @@ class Ui_mainWindow(object):
         self.ChooseIndictrtxt.setGeometry(QRect(310, 90, 111, 16))
         self.ChooseIndictrtxt.setFont(font3)
         self.ChooseIndictrtxt.setStyleSheet(u"background-color: rgba(255, 255, 255,)")
+        self.CurencyBox = QComboBox(self.MaininIci)
+        self.CurencyBox.setObjectName(u"CurencyBox")
+        self.CurencyBox.setGeometry(QRect(310, 180, 111, 21))
+        self.CurencyBox.setStyleSheet(u"background-color: rgba(255, 255, 255,70)")
+        self.ChoosCrncTxt = QLabel(self.MaininIci)
+        self.ChoosCrncTxt.setObjectName(u"ChoosCrncTxt")
+        self.ChoosCrncTxt.setGeometry(QRect(320, 150, 101, 16))
+        self.ChoosCrncTxt.setStyleSheet(u"background-color: rgba(255, 255, 255,)")
+        self.StartdateTXT = QLabel(self.MaininIci)
+        self.StartdateTXT.setObjectName(u"StartdateTXT")
+        self.StartdateTXT.setGeometry(QRect(210, 210, 61, 16))
+        self.StartdateTXT.setStyleSheet(u"background-color: rgba(255, 255, 255,)")
+        self.EndDatetxt = QLabel(self.MaininIci)
+        self.EndDatetxt.setObjectName(u"EndDatetxt")
+        self.EndDatetxt.setGeometry(QRect(470, 210, 51, 16))
+        self.EndDatetxt.setStyleSheet(u"background-color: rgba(255, 255, 255,)")
+        self.StartClndr = QCalendarWidget(self.MaininIci)
+        self.StartClndr.setObjectName(u"StartClndr")
+        self.StartClndr.setGeometry(QRect(120, 230, 231, 141))
+        self.StartClndr.setAutoFillBackground(False)
+        self.StartClndr.setGridVisible(True)
+        self.StartClndr.setSelectionMode(QCalendarWidget.SingleSelection)
+        self.StartClndr.setHorizontalHeaderFormat(QCalendarWidget.NoHorizontalHeader)
+        self.StartClndr.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        self.StartClndr.setNavigationBarVisible(True)
+        self.StartClndr.setDateEditEnabled(True)
+        self.EndClndr = QCalendarWidget(self.MaininIci)
+        self.EndClndr.setObjectName(u"EndClndr")
+        self.EndClndr.setGeometry(QRect(380, 230, 231, 141))
+        self.EndClndr.setAutoFillBackground(False)
+        self.EndClndr.setGridVisible(True)
+        self.EndClndr.setSelectionMode(QCalendarWidget.SingleSelection)
+        self.EndClndr.setHorizontalHeaderFormat(QCalendarWidget.NoHorizontalHeader)
+        self.EndClndr.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        self.EndClndr.setNavigationBarVisible(True)
+        self.EndClndr.setDateEditEnabled(True)
         mainWindow.setCentralWidget(self.MaininIci)
         self.menubar = QMenuBar(mainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 716, 22))
         self.menuMenu = QMenu(self.menubar)
         self.menuMenu.setObjectName(u"menuMenu")
-        self.menuMenu.setGeometry(QRect(319, 225, 168, 149))
+        self.menuMenu.setGeometry(QRect(418, 190, 154, 139))
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -489,19 +516,7 @@ class Ui_mainWindow(object):
             for index, signal in sell_signal[sell_signal].items():
                 plt.text(index, stock_data['Close'][index], 'Sell', color='red',
                          bbox=dict(facecolor='white', edgecolor='red', boxstyle='round,pad=0.3'))
-        #elif self.IndicatorBox2.currentText() == 'stochrsi':
-            #stochrsi=stock_data.ta.stochrsi()
-            #plt.plot(stock_data.index,stochrsi,label='STOCH RSI')
-        #elif self.IndicatorBox2.currentText() == 'td_seq':
-         #   td_seq=stock_data.ta.td_seq()
-          #  plt.plot(stock_data.index,td_seq,label='TD SEQ')
-        #elif self.IndicatorBox2.currentText() == 'trix':
-         #   trix=stock_data.ta.trix()
-          #  plt.plot(stock_data.index,trix,label='TRIX')
-        #elif self.IndicatorBox2.currentText() == 'tsi':
-         #   tsi=stock_data.ta.tsi()
-          #  plt.plot(stock_data.index,tsi,label='TSI')
-           # plt.axhline(y=0, color='r', linestyle='--')
+
         elif self.IndicatorBox2.currentText() == 'uo':
             uo=stock_data.ta.uo()
             plt.plot(stock_data.index,uo,label='UO')
@@ -817,14 +832,17 @@ class Ui_mainWindow(object):
                                                              u"<html><head/><body><p>Copyright \u00a9 2024-All Rights Reserved</p></body></html>",
                                                              None))
         self.ShowButton.setText(QCoreApplication.translate("mainWindow", u"Show", None))
-        self.UcanBuy.setText(QCoreApplication.translate("mainWindow", u"     You can Buy", None))
-        self.UcanSell.setText(QCoreApplication.translate("mainWindow", u"     You can Sell", None))
         self.ChooseSymboltxt.setText(
             QCoreApplication.translate("mainWindow", u"<html><head/><body><p>Choose Stock Symbol</p></body></html>",
                                        None))
         self.ChooseIndictrtxt.setText(
             QCoreApplication.translate("mainWindow", u"<html><head/><body><p>Choose Indicators</p></body></html>",
                                        None))
+        self.ChoosCrncTxt.setText(QCoreApplication.translate("mainWindow",
+                                                             u"<html><head/><body><p><span style=\" font-weight:700;\">Choose Curency</span></p></body></html>",
+                                                             None))
+        self.StartdateTXT.setText(QCoreApplication.translate("mainWindow", u"Start date", None))
+        self.EndDatetxt.setText(QCoreApplication.translate("mainWindow", u"End date", None))
         self.menuMenu.setTitle(QCoreApplication.translate("mainWindow", u"Menu", None))
         # retranslateUi
 
